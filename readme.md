@@ -18,5 +18,30 @@ Install via composer into your project:
 
 ## Basic Usage
 
+You can either use the Mailer abstraction class to simplify adapter handling
 
+```
+    use Anekdotes\Mailer\Mailer;
+    use Anekdotes\Mailer\Adapters\SendgridAdapter;
 
+    $mailer = new Mailer(new SendgridAdapter('sendgridapikey'));
+    $mailer->send('<p>My HTML message</p>',function($message){
+        $message->from('me@you.com','Me');
+            ->to('you@me.com','You');
+            ->subject('This is a message'); 
+    });
+
+```
+
+Or directly use an adapter
+```
+    use Anekdotes\Mailer\Adapters\SendgridAdapter;
+
+    $sendgrid = new SendgridAdapter('sendgridapikey');
+    $sendgrid->send('<p>My HTML message</p>',function($message){
+        $message->from('me@you.com','Me');
+            ->to('you@me.com','You');
+            ->subject('This is a message'); 
+    });
+
+```

@@ -15,4 +15,11 @@ namespace Anekdotes\Mailer\Adapters;
  */
 interface MailerAdapter
 {
+  /*
+   * Configure default from fields
+   *
+   * @param string $email Email for the from field
+   * @param string $name  Name for the from field
+   */
+  public function alwaysFrom($email, $name);
 }
