@@ -11,8 +11,8 @@
 
 namespace Tests;
 
-use Anekdotes\Mailer\Mailer;
 use Anekdotes\Mailer\Adapters\MailerAdapter;
+use Anekdotes\Mailer\Mailer;
 use PHPUnit_Framework_TestCase;
 
 class MailerTest extends PHPUnit_Framework_TestCase
@@ -22,6 +22,6 @@ class MailerTest extends PHPUnit_Framework_TestCase
     {
         $stub = $this->createMock(MailerAdapter::class);
         $mailer = new Mailer($stub);
-        $this->assertInstanceOf(Mailer::class,$mailer);
+        $this->assertInstanceOf(Mailer::class, $mailer);
     }
 }

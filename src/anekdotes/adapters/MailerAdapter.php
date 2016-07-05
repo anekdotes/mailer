@@ -15,5 +15,4 @@ namespace Anekdotes\Mailer\Adapters;
  */
 interface MailerAdapter
 {
-
 }
