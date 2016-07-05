@@ -24,4 +24,16 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $sendgridAdapter = new SendGridAdapter($stub);
         $this->assertInstanceOf(SendGridAdapter::class, $sendgridAdapter);
     }
+    
+    //Sets the Adapter with AlwaysFrom
+    public function testAlwaysFromSendgridAdapter()
+    {
+        $stub = $this->createMock(SendGrid::class);
+        $sendgridAdapter = new SendGridAdapter($stub);
+        $sendgridAdapter->alwaysFrom('a@b.c', 'abc');
+        $this->assertEquals($sendgridAdapter->getAlwaysFrom(), [
+            'address' => 'a@b.c', 
+            'name' => 'abc'
+        ]);
+    }
 }

@@ -11,6 +11,8 @@
 namespace Anekdotes\Mailer\Adapters\SendGrid;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
+use Sengrid;
+
 /**
  * Adapts the Sendgrid API to send
  */
@@ -23,14 +25,39 @@ class SendGridAdapter implements MailerAdapter
      */
     protected $from;
 
+    /**
+     * Sendgrid instance we're adapting
+     *
+     * @var Sengrid
+     */
+    protected $sendgrid;
+
+    /**
+     * Instanciates the adapter with its Sendgrid control
+     *
+     * @param \Sendgrid $sendgrid Instance of sendgrid mail api
+     */
+    public function __construct($sengrid){
+        $this->sendgrid = $sengrid; 
+    }
+
     /*
      * Configure default from fields
      *
-     * @param string $email Email for the from field
+     * @param string $address Email for the from field
      * @param string $name  Name for the from field
      */
-    public function alwaysFrom($email, $name){
+    public function alwaysFrom($address, $name){
       $this->from = compact('address', 'name');
+    }
+
+    /*
+     * Return the default from field
+     *
+     * @returns array the adress+name of the always from field
+     */
+    public function getAlwaysFrom(){
+        return $this->from;
     }
 
     /*
