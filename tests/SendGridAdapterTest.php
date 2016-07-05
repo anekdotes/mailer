@@ -12,8 +12,8 @@
 namespace Tests;
 
 use Anekdotes\Mailer\Adapters\SendGrid\SendGridAdapter;
-use SendGrid;
 use PHPUnit_Framework_TestCase;
+use SendGrid;
 
 class SendGridAdapterTest extends PHPUnit_Framework_TestCase
 {
@@ -24,7 +24,7 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $sendgridAdapter = new SendGridAdapter($stub);
         $this->assertInstanceOf(SendGridAdapter::class, $sendgridAdapter);
     }
-    
+
     //Sets the Adapter with AlwaysFrom
     public function testAlwaysFromSendgridAdapter()
     {
@@ -32,8 +32,8 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $sendgridAdapter = new SendGridAdapter($stub);
         $sendgridAdapter->alwaysFrom('a@b.c', 'abc');
         $this->assertEquals($sendgridAdapter->getAlwaysFrom(), [
-            'address' => 'a@b.c', 
-            'name' => 'abc'
+            'address' => 'a@b.c',
+            'name'    => 'abc',
         ]);
     }
 }
