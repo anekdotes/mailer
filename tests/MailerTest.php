@@ -42,6 +42,7 @@ class MailerTest extends PHPUnit_Framework_TestCase
         $stub->expects($this->once())->method('send');
 
         $mailer = new Mailer($stub);
-        $mailer->send('<div>blabla</div>', function($message){});
+        $mailer->send('<div>blabla</div>', function ($message) {
+        });
     }
 }
