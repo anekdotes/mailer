@@ -26,7 +26,7 @@
   "autoload": {
     "psr-4": {
       "Anekdotes\\Mailer\\": "src/anekdotes/",
-      "Anekdotes\\Mailer\\Adapters\\": "src/anekdotes/drivers"
+      "Anekdotes\\Mailer\\Adapters\\": "src/anekdotes/adapters"
     }
   },
   "autoload-dev": {
