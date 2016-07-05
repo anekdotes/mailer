@@ -14,49 +14,52 @@ use Anekdotes\Mailer\Adapters\MailerAdapter;
 use Sengrid;
 
 /**
- * Adapts the Sendgrid API to send
+ * Adapts the Sendgrid API to send.
  */
 class SendGridAdapter implements MailerAdapter
 {
     /**
-     * The default address and name messages will be sent from
+     * The default address and name messages will be sent from.
      *
      * @var array
      */
     protected $from;
 
     /**
-     * Sendgrid instance we're adapting
+     * Sendgrid instance we're adapting.
      *
      * @var Sengrid
      */
     protected $sendgrid;
 
     /**
-     * Instanciates the adapter with its Sendgrid control
+     * Instanciates the adapter with its Sendgrid control.
      *
      * @param \Sendgrid $sendgrid Instance of sendgrid mail api
      */
-    public function __construct($sengrid){
+    public function __construct($sengrid)
+    {
         $this->sendgrid = $sengrid; 
     }
 
     /*
-     * Configure default from fields
+     * Configure default from fields.
      *
      * @param string $address Email for the from field
      * @param string $name  Name for the from field
      */
-    public function alwaysFrom($address, $name){
+    public function alwaysFrom($address, $name)
+    {
       $this->from = compact('address', 'name');
     }
 
     /*
-     * Return the default from field
+     * Return the default from field.
      *
      * @returns array the adress+name of the always from field
      */
-    public function getAlwaysFrom(){
+    public function getAlwaysFrom()
+    {
         return $this->from;
     }
 
@@ -66,7 +69,8 @@ class SendGridAdapter implements MailerAdapter
      * @param string $message   HTML Content with the message(body)
      * @param string $callback  Callback function to act on the message
      */
-    public function send($message, $callback){
+    public function send($message, $callback)
+    {
       
     }
 }
