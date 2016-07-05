@@ -39,7 +39,7 @@ class SendGridAdapter implements MailerAdapter
      */
     public function __construct($sengrid)
     {
-        $this->sendgrid = $sengrid; 
+        $this->sendgrid = $sengrid;
     }
 
     /*
@@ -50,7 +50,7 @@ class SendGridAdapter implements MailerAdapter
      */
     public function alwaysFrom($address, $name)
     {
-      $this->from = compact('address', 'name');
+        $this->from = compact('address', 'name');
     }
 
     /*
@@ -71,6 +71,5 @@ class SendGridAdapter implements MailerAdapter
      */
     public function send($message, $callback)
     {
-      
     }
 }
