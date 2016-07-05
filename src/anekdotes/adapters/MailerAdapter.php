@@ -15,11 +15,19 @@ namespace Anekdotes\Mailer\Adapters;
  */
 interface MailerAdapter
 {
-  /*
-   * Configure default from fields
-   *
-   * @param string $email Email for the from field
-   * @param string $name  Name for the from field
-   */
-  public function alwaysFrom($email, $name);
+    /*
+     * Configure default from fields
+     *
+     * @param string $email Email for the from field
+     * @param string $name  Name for the from field
+     */
+    public function alwaysFrom($email, $name);
+
+    /*
+     * Send an email!
+     *
+     * @param string $message   HTML Content with the message(body)
+     * @param string $callback  Callback function to act on the message
+     */
+    public function send($message, $callback);
 }

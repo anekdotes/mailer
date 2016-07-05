@@ -39,6 +39,13 @@ class Mailer
      * @param string $name  Name to pass to the adapter 
      */
     public function alwaysFrom($email, $name){
-        $this->adapter->alwaysFrom($email,$name);
+        $this->adapter->alwaysFrom($email, $name);
+    }
+
+    /**
+     * Calls the adapter's send method
+     */
+    public function send($message, $callback){
+        $this->adapter->send($message, $callback);
     }
 }

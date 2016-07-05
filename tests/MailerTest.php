@@ -32,6 +32,16 @@ class MailerTest extends PHPUnit_Framework_TestCase
         $stub->expects($this->once())->method('alwaysFrom');
 
         $mailer = new Mailer($stub);
-        $mailer->alwaysFrom('a@b.c','abc');
+        $mailer->alwaysFrom('a@b.c', 'abc');
+    }
+
+    //Tests that send calls the Adapter's send method
+    public function testSend()
+    {
+        $stub = $this->createMock(MailerAdapter::class);
+        $stub->expects($this->once())->method('send');
+
+        $mailer = new Mailer($stub);
+        $mailer->send('<div>blabla</div>', function($message){});
     }
 }
