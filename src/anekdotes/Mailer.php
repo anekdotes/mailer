@@ -23,11 +23,12 @@ class Mailer
     private $adapter;
 
     /**
-     * Instantiate The Mailer and its adapter
+     * Instantiate The Mailer and its adapter.
      *
      * @param Anekdotes\Mailer\Adapters\MailerAdapter The adapter to provide to the Mailer
      */
-    public function __construct($adapter){
+    public function __construct($adapter)
+    {
         $this->adapter = $adapter;
     }
 }
