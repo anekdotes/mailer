@@ -30,75 +30,96 @@ class SendGridEmailAdapter
      * @param \SendGrid\Mail $mail Mail object that will be sent
      * @param \SendGrid\Personalization $personalization Additionnal contents to be added to the mail
      */
-    public function __construct($mail, $personalization){
+    public function __construct($mail, $personalization)
+    {
         $this->mail = $mail;
         $this->personalization = $personalization;
     }
 
     /**
-      * Builds the email and return it as a SendGrid Mail Instance!
-      */
-    public function getSendGridEmail(){
+     * Builds the email and return it as a SendGrid Mail Instance!
+     */
+    public function getSendGridEmail()
+    {
         $this->mail->addPersonalization($this->personalization);
+
         return $this->mail;
     }
 
     /**
-     * Add a new recipient in the "To" email field
-     * @param  string  $name   Name of the recipient
-     * @param  string  $email  Email of the recipient
+     * Add a new recipient in the "To" email field.
+     *
+     * @param string $name  Name of the recipient
+     * @param string $email Email of the recipient
      */
-    public function to($name,$email){
-      $this->personalization->addTo(new \Sendgrid\Email($email,$name));
-      return $this;
+    public function to($name, $email)
+    {
+        $this->personalization->addTo(new \Sendgrid\Email($email, $name));
+
+        return $this;
     }
 
     /**
-     * Change the sender's name+email in the "From" email field
-     * @param  string  $name   Name of the sender
-     * @param  string  $email  Email of the sender
+     * Change the sender's name+email in the "From" email field.
+     *
+     * @param string $name  Name of the sender
+     * @param string $email Email of the sender
      */
-    public function from($name,$email){
-      $this->mail->setFrom(new \Sendgrid\Email($email,$name));
-      return $this;
+    public function from($name, $email)
+    {
+        $this->mail->setFrom(new \Sendgrid\Email($email, $name));
+
+        return $this;
     }
 
     /**
-     * Add a CC recipient
-     * @param  string  $name   Name of the recipient
-     * @param  string  $email  Email of the recipient
+     * Add a CC recipient.
+     *
+     * @param string $name  Name of the recipient
+     * @param string $email Email of the recipient
      */
-    public function addCc($name,$email){
-      $this->personalization->addCc(new \Sendgrid\Email($email,$name));
-      return $this;
+    public function addCc($name, $email)
+    {
+        $this->personalization->addCc(new \Sendgrid\Email($email, $name));
+
+        return $this;
     }
 
     /**
-     * Add a BCC recipient
-     * @param  string  $name   Name of the recipient
-     * @param  string  $email  Email of the recipient
+     * Add a BCC recipient.
+     *
+     * @param string $name  Name of the recipient
+     * @param string $email Email of the recipient
      */
-    public function addBcc($name,$email){
-      $this->personalization->addBcc(new \Sendgrid\Email($email,$name));
-      return $this;
+    public function addBcc($name, $email)
+    {
+        $this->personalization->addBcc(new \Sendgrid\Email($email, $name));
+
+        return $this;
     }
 
     /**
-     * Set a Subject
-     * @param  string  $subject  Subject
+     * Set a Subject.
+     *
+     * @param string $subject Subject
      */
-    public function subject($subject){
-      $this->personalization->setSubject($subject);
-      return $this;
+    public function subject($subject)
+    {
+        $this->personalization->setSubject($subject);
+
+        return $this;
     }
 
     /**
-     * Set the content
-     * @param  string  $content  Content
-     * @param  string  $type     Content type (i.e. text/html)
+     * Set the content.
+     *
+     * @param string $content Content
+     * @param string $type    Content type (i.e. text/html)
      */
-    public function setBody($content,$type){
-      $this->mail->addContent(new \Sendgrid\Content($type, $content));
-      return $this;
+    public function setBody($content, $type)
+    {
+        $this->mail->addContent(new \Sendgrid\Content($type, $content));
+
+        return $this;
     }
 }

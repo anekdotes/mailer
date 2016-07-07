@@ -48,7 +48,7 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $clientReflection = $sendgrid->getProperty('client');
         $sendgridStub = $this->createMock(SendGrid::class);
         $clientStub = $this->getMockBuilder(Client::class)
-                           ->setMethods(['mail','__construct'])
+                           ->setMethods(['mail', '__construct'])
                            ->disableOriginalConstructor()
                            ->getMock();
         $clientStub->expects($this->once())
@@ -59,19 +59,20 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $sendgridAdapter = new SendGridAdapter($sendgridStub);
         $this->assertTrue(
             $sendgridAdapter->send('<div>blabla</div>', function ($message) {
-                $message->to("a@b.c","abc");
+                $message->to('a@b.c', 'abc');
             }));
     }
 }
 
 class SendMock
 {
-  public function send()
-  {
-    return new SendMock();
-  }
+    public function send()
+    {
+        return new self();
+    }
 
-  public function post($whatevs){
-    return true;
-  }
+    public function post($whatevs)
+    {
+        return true;
+    }
 }

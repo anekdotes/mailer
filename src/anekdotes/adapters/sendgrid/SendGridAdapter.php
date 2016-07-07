@@ -62,10 +62,11 @@ class SendGridAdapter implements MailerAdapter
      */
     public function send($htmlMessage, $callback)
     {
-      $message = $this->createMessage();
-      $this->callMessageBuilder($callback, $message);
-      $message->setBody($htmlMessage, 'text/html');
-      return $this->sendgrid->client->mail()->send()->post($message->getSendGridEmail());
+        $message = $this->createMessage();
+        $this->callMessageBuilder($callback, $message);
+        $message->setBody($htmlMessage, 'text/html');
+
+        return $this->sendgrid->client->mail()->send()->post($message->getSendGridEmail());
     }
 
     /*
@@ -80,13 +81,13 @@ class SendGridAdapter implements MailerAdapter
         // If a global from address has been specified we will set it on every message
         // instances so the developer does not have to repeat themselves every time
         // they create a new message. We will just go ahead and push the address.
-        if (isset($this->from['address']))
-        {
-          $message->from($this->from['address'], $this->from['name']);
+        if (isset($this->from['address'])) {
+            $message->from($this->from['address'], $this->from['name']);
         }
+
         return $message;
     }
-      
+
     /*
      * Build the message with its fields using a callback
      *
@@ -95,11 +96,10 @@ class SendGridAdapter implements MailerAdapter
      */
     protected function callMessageBuilder($callback, $message)
     {
-      if ($callback instanceof \Closure)
-      {
-        return call_user_func($callback, $message);
-      }
-      var_dump(get_class($callback));
-      throw new \Exception("the Message Builder Callback is not valid.");
+        if ($callback instanceof \Closure) {
+            return call_user_func($callback, $message);
+        }
+        var_dump(get_class($callback));
+        throw new \Exception('the Message Builder Callback is not valid.');
     }
 }
