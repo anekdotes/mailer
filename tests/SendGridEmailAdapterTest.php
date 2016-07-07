@@ -26,12 +26,12 @@ class SendGridEmailAdapterTest extends PHPUnit_Framework_TestCase
         $email = new SendGridEmailAdapter($mailStub, $persoStub);
         $this->assertInstanceOf(SendGridEmailAdapter::class, $email);
         $reflection = new \ReflectionClass($email);
-        $mail_prop = $reflection->getProperty('mail');
-        $perso_prop = $reflection->getProperty('personalization');
-        $mail_prop->setAccessible(true);
-        $perso_prop->setAccessible(true);
-        $this->assertEquals($mailStub, $mail_prop->getValue($email));
-        $this->assertEquals($persoStub, $perso_prop->getValue($email));
+        $mailProp = $reflection->getProperty('mail');
+        $persoProp = $reflection->getProperty('personalization');
+        $mailProp->setAccessible(true);
+        $persoProp->setAccessible(true);
+        $this->assertEquals($mailStub, $mailProp->getValue($email));
+        $this->assertEquals($persoStub, $persoProp->getValue($email));
     }
 
     public function testSGEmailSend()

@@ -33,11 +33,11 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $sendgridAdapter = new SendGridAdapter($stub);
         $sendgridAdapter->alwaysFrom('a@b.c', 'abc');
         $reflection = new \ReflectionClass($sendgridAdapter);
-        $reflection_property = $reflection->getProperty('from');
-        $reflection_property->setAccessible(true);
+        $reflectionProperty = $reflection->getProperty('from');
+        $reflectionProperty->setAccessible(true);
         $this->assertEquals(
           ['address' => 'a@b.c', 'name' => 'abc'],
-          $reflection_property->getValue($sendgridAdapter)
+          $reflectionProperty->getValue($sendgridAdapter)
         );
     }
 
@@ -73,6 +73,6 @@ class SendMock
 
     public function post($whatevs)
     {
-        return true;
+        return $whatevs == $whatevs;
     }
 }
