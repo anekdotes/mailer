@@ -16,14 +16,14 @@ use PHPUnit_Framework_TestCase;
 use SendGrid\Mail;
 use SendGrid\Personalization;
 
-class SendGridAdapterEmailTest extends PHPUnit_Framework_TestCase
+class SendGridEmailAdapterTest extends PHPUnit_Framework_TestCase
 {
     //Tests the instantion of the Sendgrid Email Adapter
     public function testInstantiateSGEmailAdapter()
     {
         $mailStub = $this->createMock(Mail::class);
         $persoStub = $this->createMock(Personalization::class);
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
         $this->assertInstanceOf(SendGridEmailAdapter::class, $email);
         $reflection = new \ReflectionClass($email);
         $mail_prop = $reflection->getProperty('mail');
@@ -34,64 +34,63 @@ class SendGridAdapterEmailTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($persoStub, $perso_prop->getValue($email));
     }
 
-
     public function testSGEmailSend()
     {
         $mailStub = $this->createMock(Mail::class);
         $persoStub = $this->createMock(Personalization::class);
         $mailStub->expects($this->once())->method('addPersonalization');
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
-        $this->assertEquals($mailStub,$email->getSendGridEmail());
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($mailStub, $email->getSendGridEmail());
     }
-    
+
     public function testSGEmailTo()
     {
         $mailStub = $this->createMock(Mail::class);
         $persoStub = $this->createMock(Personalization::class);
         $persoStub->expects($this->once())->method('addTo')->with(
-          $this->callback(function($subject){
-            return $subject instanceOf \SendGrid\Email;  
+          $this->callback(function ($subject) {
+              return $subject instanceof \SendGrid\Email;
           }));
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
-        $this->assertEquals($email,$email->to('a@b.c','abc'));
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($email, $email->to('a@b.c', 'abc'));
     }
-    
+
     public function testSGEmailFrom()
     {
         $mailStub = $this->createMock(Mail::class);
         $persoStub = $this->createMock(Personalization::class);
         $mailStub->expects($this->once())->method('setFrom')->with(
-          $this->callback(function($subject){
-            return $subject instanceOf \SendGrid\Email;  
+          $this->callback(function ($subject) {
+              return $subject instanceof \SendGrid\Email;
           }));
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
-        $this->assertEquals($email,$email->from('a@b.c','abc'));
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($email, $email->from('a@b.c', 'abc'));
     }
-    
+
     public function testSGEmailAddCC()
     {
         $mailStub = $this->createMock(Mail::class);
         $persoStub = $this->createMock(Personalization::class);
         $persoStub->expects($this->once())->method('addCc')->with(
-          $this->callback(function($subject){
-            return $subject instanceOf \SendGrid\Email;  
+          $this->callback(function ($subject) {
+              return $subject instanceof \SendGrid\Email;
           }));
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
-        $this->assertEquals($email,$email->addCc('a@b.c','abc'));
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($email, $email->addCc('a@b.c', 'abc'));
     }
-    
+
     public function testSGEmailAddBCC()
     {
         $mailStub = $this->createMock(Mail::class);
         $persoStub = $this->createMock(Personalization::class);
         $persoStub->expects($this->once())->method('addBcc')->with(
-          $this->callback(function($subject){
-            return $subject instanceOf \SendGrid\Email;  
+          $this->callback(function ($subject) {
+              return $subject instanceof \SendGrid\Email;
           }));
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
-        $this->assertEquals($email,$email->addBcc('a@b.c','abc'));
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($email, $email->addBcc('a@b.c', 'abc'));
     }
-    
+
     public function testSGEmailSubject()
     {
         $mailStub = $this->createMock(Mail::class);
@@ -99,19 +98,19 @@ class SendGridAdapterEmailTest extends PHPUnit_Framework_TestCase
         $persoStub->expects($this->once())->method('setSubject')->with(
           $this->equalTo('Subjectt')
         );
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
-        $this->assertEquals($email,$email->subject('Subjectt'));
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($email, $email->subject('Subjectt'));
     }
-    
+
     public function testSGEmailsetBody()
     {
         $mailStub = $this->createMock(Mail::class);
         $persoStub = $this->createMock(Personalization::class);
         $mailStub->expects($this->once())->method('addContent')->with(
-          $this->callback(function($subject){
-            return $subject instanceOf \SendGrid\Content;  
+          $this->callback(function ($subject) {
+              return $subject instanceof \SendGrid\Content;
           }));
-        $email = new SendGridEmailAdapter($mailStub,$persoStub);
-        $this->assertEquals($email,$email->setBody('text/html','<div>kk</div>'));
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($email, $email->setBody('text/html', '<div>kk</div>'));
     }
 }
