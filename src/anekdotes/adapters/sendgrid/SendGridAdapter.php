@@ -11,7 +11,8 @@
 namespace Anekdotes\Mailer\Adapters\SendGrid;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
-use Sengrid;
+use SendGrid\Mail;
+use SendGrid\Personalization;
 
 /**
  * Adapts the Sendgrid API to send.
@@ -54,22 +55,51 @@ class SendGridAdapter implements MailerAdapter
     }
 
     /*
-     * Return the default from field.
+     * Send an email!
      *
-     * @returns array the adress+name of the always from field
+     * @param string $htmlMessage   HTML Content with the message(body)
+     * @param string $callback  Callback function to act on the message
      */
-    public function getAlwaysFrom()
+    public function send($htmlMessage, $callback)
     {
-        return $this->from;
+      $message = $this->createMessage();
+      $this->callMessageBuilder($callback, $message);
+      $message->setBody($htmlMessage, 'text/html');
+      return $this->sendgrid->client->mail()->send()->post($message->getSendGridEmail());
     }
 
     /*
-     * Send an email!
+     * Create a new message instance.
      *
-     * @param string $message   HTML Content with the message(body)
-     * @param string $callback  Callback function to act on the message
+     * @return SendGridEmailAdapter  Generated message instance
      */
-    public function send($message, $callback)
+    protected function createMessage()
     {
+        $message = new SendGridEmailAdapter(new Mail(), new Personalization());
+
+        // If a global from address has been specified we will set it on every message
+        // instances so the developer does not have to repeat themselves every time
+        // they create a new message. We will just go ahead and push the address.
+        if (isset($this->from['address']))
+        {
+          $message->from($this->from['address'], $this->from['name']);
+        }
+        return $message;
+    }
+      
+    /*
+     * Build the message with its fields using a callback
+     *
+     * @param  \Closure                   $callback  The function used (and called) to build the message
+     * @param  SendGridEmailAdapter  $message   The message to use and add the fields to
+     */
+    protected function callMessageBuilder($callback, $message)
+    {
+      if ($callback instanceof \Closure)
+      {
+        return call_user_func($callback, $message);
+      }
+      var_dump(get_class($callback));
+      throw new \Exception("the Message Builder Callback is not valid.");
     }
 }
