@@ -99,7 +99,6 @@ class SendGridAdapter implements MailerAdapter
         if ($callback instanceof \Closure) {
             return call_user_func($callback, $message);
         }
-        var_dump(get_class($callback));
         throw new \Exception('the Message Builder Callback is not valid.');
     }
 }

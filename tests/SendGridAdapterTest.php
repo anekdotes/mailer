@@ -62,17 +62,55 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
                 $message->to('a@b.c', 'abc');
             }));
     }
+
+    public function testSendWithAlwaysFrom()
+    {
+        $sendgrid = new \ReflectionClass('Sendgrid');
+        $clientReflection = $sendgrid->getProperty('client');
+        $sendgridStub = $this->createMock(SendGrid::class);
+        $clientStub = $this->getMockBuilder(Client::class)
+                           ->setMethods(['mail', '__construct'])
+                           ->disableOriginalConstructor()
+                           ->getMock();
+        $clientStub->expects($this->once())
+                   ->method('mail')
+                   ->willReturn(new SendMock());
+        $clientReflection->setAccessible(true);
+        $clientReflection->setValue($sendgridStub, $clientStub);
+        $sendgridAdapter = new SendGridAdapter($sendgridStub);
+        $sendgridAdapter->alwaysFrom('b@a.c', 'bac');
+        $this->assertTrue(
+            $sendgridAdapter->send('<div>blabla</div>', function ($message) {
+                $message->to('a@b.c', 'abc');
+            }));
+    }
+
+    public function testInvalidClosureMessageBuilder()
+    {
+        $sendgrid = new \ReflectionClass('Sendgrid');
+        $clientReflection = $sendgrid->getProperty('client');
+        $sendgridStub = $this->createMock(SendGrid::class);
+        $clientStub = $this->getMockBuilder(Client::class)
+                           ->setMethods(['mail', '__construct'])
+                           ->disableOriginalConstructor()
+                           ->getMock();
+        $clientReflection->setAccessible(true);
+        $clientReflection->setValue($sendgridStub, $clientStub);
+        $sendgridAdapter = new SendGridAdapter($sendgridStub);
+        $this->setExpectedException('\Exception');
+        $sendgridAdapter->send('<div>blabla</div>', 'blabla');
+  }
 }
 
 class SendMock
 {
-    public function send()
-    {
-        return new self();
-    }
+  public function send()
+  {
+      return new self();
+  }
 
-    public function post($whatevs)
-    {
-        return $whatevs == $whatevs;
-    }
+  public function post($whatevs)
+  {
+      return $whatevs == $whatevs;
+  }
 }
