@@ -9,7 +9,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/50134febcefe4cc78daf07ca45969728)](https://www.codacy.com/app/Grasseh/mailer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=anekdotes/mailer&amp;utm_campaign=Badge_Grade)
 
 Allows adaptation and abstraction of mailing APIs. The goal of this project is to unify different Mailer APIs into a unified Send function. 
-In otherwords, this Mailer allows to only have to change the Mailer instantion if a different API needs to be used, without needing to changed the Send Messages calls.
+In otherwords, this Mailer allows to only have to change the Mailer instantion if a different API needs to be used, without needing to change the Send Messages calls.
 
 ## Installation
 
