@@ -99,18 +99,18 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $sendgridAdapter = new SendGridAdapter($sendgridStub);
         $this->setExpectedException('\Exception');
         $sendgridAdapter->send('<div>blabla</div>', 'blabla');
-  }
+    }
 }
 
 class SendMock
 {
-  public function send()
-  {
-      return new self();
-  }
+    public function send()
+    {
+        return new self();
+    }
 
-  public function post($whatevs)
-  {
-      return $whatevs == $whatevs;
-  }
+    public function post($whatevs)
+    {
+        return $whatevs == $whatevs;
+    }
 }
