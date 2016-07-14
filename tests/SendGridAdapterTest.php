@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Logger package.
+ * This file is part of the Mailer package.
  *
  * (c) Anekdotes Communication inc. <info@anekdotes.com>
  *
