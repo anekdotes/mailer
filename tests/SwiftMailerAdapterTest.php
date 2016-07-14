@@ -62,5 +62,45 @@ class SwiftMailerAdapterTest extends PHPUnit_Framework_TestCase
                 $message->to('a@b.c', 'abc');
             }));
     }
+
+    public function testSendWithAlwaysFromSwiftMailer()
+    {
+        $swiftMailer = new \ReflectionClass('Swift_Mailer');
+        $transportReflection = $swiftMailer->getProperty('_transport');
+        $swiftMailerStub = $this->createMock(Swift_Mailer::class);
+        $swiftMailerStub->expects($this->once())
+                   ->method('send')
+                   ->willReturn(true);
+        $transportStub = $this->getMockBuilder(Swift_SmtpTransport::class)
+                           ->setMethods(['send', '__construct'])
+                           ->disableOriginalConstructor()
+                           ->getMock();
+        $transportReflection->setAccessible(true);
+        $transportReflection->setValue($swiftMailerStub, $transportStub);
+        $swiftMailerAdapter = new SwiftMailerAdapter($swiftMailerStub);
+        $swiftMailerAdapter->alwaysFrom('b@a.c', 'bac');
+        $this->assertTrue(
+            $swiftMailerAdapter->send('<div>blabla</div>', function ($message) {
+                $message->to('a@b.c', 'abc');
+            }));
+
+    }
+
+    public function testInvalidClosureMessageBuilder()
+    {
+        $swiftMailer = new \ReflectionClass('Swift_Mailer');
+        $transportReflection = $swiftMailer->getProperty('_transport');
+        $swiftMailerStub = $this->createMock(Swift_Mailer::class);
+        $transportStub = $this->getMockBuilder(Swift_SmtpTransport::class)
+                           ->setMethods(['send', '__construct'])
+                           ->disableOriginalConstructor()
+                           ->getMock();
+        $transportReflection->setAccessible(true);
+        $transportReflection->setValue($swiftMailerStub, $transportStub);
+        $this->setExpectedException('\Exception');
+        $swiftMailerAdapter = new SwiftMailerAdapter($swiftMailerStub);
+        $swiftMailerAdapter->send('<div>blabla</div>', 'blabla');
+    }
 }
+
 
