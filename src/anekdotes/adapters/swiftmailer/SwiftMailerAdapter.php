@@ -11,8 +11,9 @@
 namespace Anekdotes\Mailer\Adapters\SwiftMailer;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
-use \Illuminate\Mail\Message;
-use \Swift_Message;
+use Illuminate\Mail\Message;
+use Swift_Message;
+
 /**
  * Adapts the Sendgrid API to send.
  */
@@ -34,8 +35,8 @@ class SwiftMailerAdapter implements MailerAdapter
 
     /**
      * Create a new Mailer instance.
-     * 
-     * @param  \Swift_Mailer  $swift  The SwiftMailer instance to be used with the Mailer
+     *
+     * @param \Swift_Mailer $swift The SwiftMailer instance to be used with the Mailer
      */
     public function __construct(\Swift_Mailer $swift)
     {
@@ -43,7 +44,7 @@ class SwiftMailerAdapter implements MailerAdapter
     }
 
     /**
-     * Configure default from fields
+     * Configure default from fields.
      *
      * @param string $email Email for the from field
      * @param string $name  Name for the from field
@@ -56,8 +57,8 @@ class SwiftMailerAdapter implements MailerAdapter
     /**
      * Send an email!
      *
-     * @param string $message   HTML Content with the message(body)
-     * @param string $callback  Callback function to act on the message
+     * @param string $message  HTML Content with the message(body)
+     * @param string $callback Callback function to act on the message
      */
     public function send($htmlMessage, $callback)
     {
@@ -75,7 +76,7 @@ class SwiftMailerAdapter implements MailerAdapter
      */
     protected function createMessage()
     {
-        $message = new Message(new Swift_Message);
+        $message = new Message(new Swift_Message());
 
         // If a global from address has been specified we will set it on every message
         // instances so the developer does not have to repeat themselves every time
@@ -86,7 +87,7 @@ class SwiftMailerAdapter implements MailerAdapter
 
         return $message;
     }
-    
+
     /*
      * Build the message with its fields using a callback
      *
