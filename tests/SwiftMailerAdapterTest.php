@@ -83,7 +83,6 @@ class SwiftMailerAdapterTest extends PHPUnit_Framework_TestCase
             $swiftMailerAdapter->send('<div>blabla</div>', function ($message) {
                 $message->to('a@b.c', 'abc');
             }));
-
     }
 
     public function testInvalidClosureMessageBuilder()
@@ -102,5 +101,3 @@ class SwiftMailerAdapterTest extends PHPUnit_Framework_TestCase
         $swiftMailerAdapter->send('<div>blabla</div>', 'blabla');
     }
 }
-
-
