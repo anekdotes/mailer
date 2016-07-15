@@ -87,3 +87,25 @@ The following adapters are currently available for use :
     });
 
 ```
+
+###MailTrapAdapter
+
+Note : This adapter uses Mailtrap's basic SMTP auth, using Swift_Mailer to send the SMTP Request. 
+The goal of this adapter is to bypass Mailtrap's request limit/second by sending one email per to/bcc/cc.
+
+```
+    use Anekdotes\Mailer\Mailer;
+    use Anekdotes\Mailer\Adapters\MailTrapAdapter;
+    use \Swift_Mailer;
+    use \Swift_SmtpTransport;
+
+    $mailer = new Mailer(new MailTrapAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
+        ->setUsername('your username')
+        ->setPassword('your password'))));
+    $mailer->send('<p>My HTML message</p>',function($message){
+        $message->from('me@you.com','Me');
+            ->to('you@me.com','You');
+            ->subject('This is a message'); 
+    });
+
+```
