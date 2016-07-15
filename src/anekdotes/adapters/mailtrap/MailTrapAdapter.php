@@ -10,7 +10,6 @@
 
 namespace Anekdotes\Mailer\Adapters\MailTrap;
 
-use Anekdotes\Mailer\Adapters\MailTrap\MailTrapEmailAdapter;
 use Anekdotes\Mailer\Adapters\MailerAdapter;
 use Illuminate\Mail\Message;
 use Swift_Message;
@@ -68,10 +67,11 @@ class MailTrapAdapter implements MailerAdapter
         $message->setBody($htmlMessage, 'text/html');
 
         $allSuccess = true;
-        foreach($message->getIlluminateEmails() as $messages){
-          $allSuccess = $allSuccess && $this->swift->send($messages->getSwiftMessage());
-          sleep(1);
+        foreach ($message->getIlluminateEmails() as $messages) {
+            $allSuccess = $allSuccess && $this->swift->send($messages->getSwiftMessage());
+            sleep(1);
         }
+
         return $allSuccess;
     }
 

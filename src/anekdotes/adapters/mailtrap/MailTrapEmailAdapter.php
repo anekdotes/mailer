@@ -19,7 +19,7 @@ class MailTrapEmailAdapter
      */
     private $mail;
     /*
-     * Contains the emails to send this message to 
+     * Contains the emails to send this message to
      * @var array
      */
     private $tos;
@@ -41,11 +41,12 @@ class MailTrapEmailAdapter
     public function getIlluminateEmails()
     {
         $emails = [];
-        foreach($this->tos as $destination){
-          $mailCopy = $this->mail;
-          $mailCopy->to($destination[0],$destination[1]);
-          $emails[] = $mailCopy;
+        foreach ($this->tos as $destination) {
+            $mailCopy = $this->mail;
+            $mailCopy->to($destination[0], $destination[1]);
+            $emails[] = $mailCopy;
         }
+
         return $emails;
     }
 

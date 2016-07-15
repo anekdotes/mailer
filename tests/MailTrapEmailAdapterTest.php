@@ -12,8 +12,8 @@
 namespace Tests;
 
 use Anekdotes\Mailer\Adapters\MailTrap\MailTrapEmailAdapter;
-use PHPUnit_Framework_TestCase;
 use Illuminate\Mail\Message;
+use PHPUnit_Framework_TestCase;
 
 class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
 {
@@ -40,17 +40,17 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
     {
         $mailStub = $this->createMock(Message::class);
         $email = new MailTrapEmailAdapter($mailStub);
-        $email->to('a@b.c','abc');
+        $email->to('a@b.c', 'abc');
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('tos');
         $mailProp->setAccessible(true);
-        $this->assertEquals([['a@b.c','abc']], $mailProp->getValue($email));
+        $this->assertEquals([['a@b.c', 'abc']], $mailProp->getValue($email));
     }
 
     public function testMTEmailFrom()
     {
         $mailStub = $this->createMock(Message::class);
-        $mailStub->expects($this->once())->method('from')->with('a@b.c','abc');
+        $mailStub->expects($this->once())->method('from')->with('a@b.c', 'abc');
         $email = new MailTrapEmailAdapter($mailStub);
         $email->from('a@b.c', 'abc');
     }
@@ -59,22 +59,22 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
     {
         $mailStub = $this->createMock(Message::class);
         $email = new MailTrapEmailAdapter($mailStub);
-        $email->addCc('a@b.c','abc');
+        $email->addCc('a@b.c', 'abc');
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('tos');
         $mailProp->setAccessible(true);
-        $this->assertEquals([['a@b.c','abc']], $mailProp->getValue($email));
+        $this->assertEquals([['a@b.c', 'abc']], $mailProp->getValue($email));
     }
 
     public function testMTEmailAddBCC()
     {
         $mailStub = $this->createMock(Message::class);
         $email = new MailTrapEmailAdapter($mailStub);
-        $email->addBcc('a@b.c','abc');
+        $email->addBcc('a@b.c', 'abc');
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('tos');
         $mailProp->setAccessible(true);
-        $this->assertEquals([['a@b.c','abc']], $mailProp->getValue($email));
+        $this->assertEquals([['a@b.c', 'abc']], $mailProp->getValue($email));
     }
 
     public function testMTEmailSubject()
@@ -90,7 +90,7 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
     public function testMTEmailsetBody()
     {
         $mailStub = $this->createMock(Message::class);
-        $mailStub->expects($this->once())->method('__call')->with('setBody',['<div>kk</div>','text/html']);
+        $mailStub->expects($this->once())->method('__call')->with('setBody', ['<div>kk</div>', 'text/html']);
         $email = new MailTrapEmailAdapter($mailStub);
         $this->assertEquals($email, $email->setBody('<div>kk</div>', 'text/html'));
     }
