@@ -32,6 +32,7 @@ class MailTrapEmailAdapter
     public function __construct($mail)
     {
         $this->mail = $mail;
+        $this->tos = [];
     }
 
     /**
@@ -40,7 +41,7 @@ class MailTrapEmailAdapter
     public function getIlluminateEmails()
     {
         $emails = [];
-        foreach($tos as $destination){
+        foreach($this->tos as $destination){
           $mailCopy = $mail;
           $mailCopy->to($destination);
           $emails[] = $mailCopy;
@@ -54,7 +55,7 @@ class MailTrapEmailAdapter
      * @param string $name  Name of the recipient
      * @param string $email Email of the recipient
      */
-    public function to($name, $email)
+    public function to($email, $name)
     {
         $this->tos[] = [$email, $name];
 
@@ -67,7 +68,7 @@ class MailTrapEmailAdapter
      * @param string $name  Name of the sender
      * @param string $email Email of the sender
      */
-    public function from($name, $email)
+    public function from($email, $name)
     {
         $this->mail->from($email, $name);
 
@@ -80,7 +81,7 @@ class MailTrapEmailAdapter
      * @param string $name  Name of the recipient
      * @param string $email Email of the recipient
      */
-    public function addCc($name, $email)
+    public function addCc($email, $name)
     {
         $this->tos[] = [$email, $name];
 
@@ -93,7 +94,7 @@ class MailTrapEmailAdapter
      * @param string $name  Name of the recipient
      * @param string $email Email of the recipient
      */
-    public function addBcc($name, $email)
+    public function addBcc($email, $name)
     {
         $this->tos[] = [$email, $name];
 
@@ -120,7 +121,7 @@ class MailTrapEmailAdapter
      */
     public function setBody($content, $type)
     {
-        $this->mail->setBody($type, $content);
+        $this->mail->setBody($content, $type);
 
         return $this;
     }
