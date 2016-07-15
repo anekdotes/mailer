@@ -52,7 +52,7 @@ class SendGridEmailAdapter
      * @param string $name  Name of the recipient
      * @param string $email Email of the recipient
      */
-    public function to($name, $email)
+    public function to($email, $name)
     {
         $this->personalization->addTo(new \Sendgrid\Email($email, $name));
 
@@ -65,7 +65,7 @@ class SendGridEmailAdapter
      * @param string $name  Name of the sender
      * @param string $email Email of the sender
      */
-    public function from($name, $email)
+    public function from($email, $name)
     {
         $this->mail->setFrom(new \Sendgrid\Email($email, $name));
 
@@ -78,7 +78,7 @@ class SendGridEmailAdapter
      * @param string $name  Name of the recipient
      * @param string $email Email of the recipient
      */
-    public function addCc($name, $email)
+    public function addCc($email, $name)
     {
         $this->personalization->addCc(new \Sendgrid\Email($email, $name));
 
@@ -91,7 +91,7 @@ class SendGridEmailAdapter
      * @param string $name  Name of the recipient
      * @param string $email Email of the recipient
      */
-    public function addBcc($name, $email)
+    public function addBcc($email, $name)
     {
         $this->personalization->addBcc(new \Sendgrid\Email($email, $name));
 
