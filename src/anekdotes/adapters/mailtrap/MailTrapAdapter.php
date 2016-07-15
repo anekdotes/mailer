@@ -8,16 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Anekdotes\Mailer\Adapters\SendGrid;
+namespace Anekdotes\Mailer\Adapters\MailTrap;
 
+use Anekdotes\Mailer\Adapters\MailTrap\MailTrapEmailAdapter;
 use Anekdotes\Mailer\Adapters\MailerAdapter;
-use SendGrid\Mail;
-use SendGrid\Personalization;
+use Illuminate\Mail\Message;
+use Swift_Message;
 
 /**
- * Adapts the Sendgrid API to send.
+ * Adapts the SwifTMailer API to send messages without BCCS AND with a delay.
  */
-class SendGridAdapter implements MailerAdapter
+class MailTrapAdapter implements MailerAdapter
 {
     /**
      * The default address and name messages will be sent from.
@@ -27,26 +28,26 @@ class SendGridAdapter implements MailerAdapter
     protected $from;
 
     /**
-     * Sendgrid instance we're adapting.
+     * The Swift Mailer instance.
      *
-     * @var Sengrid
+     * @var \Swift_Mailer
      */
-    protected $sendgrid;
+    protected $swift;
 
     /**
-     * Instanciates the adapter with its Sendgrid control.
+     * Create a new Mailer instance.
      *
-     * @param \Sendgrid $sendgrid Instance of sendgrid mail api
+     * @param \Swift_Mailer $swift The SwiftMailer instance to be used with the Mailer
      */
-    public function __construct($sengrid)
+    public function __construct(\Swift_Mailer $swift)
     {
-        $this->sendgrid = $sengrid;
+        $this->swift = $swift;
     }
 
-    /*
+    /**
      * Configure default from fields.
      *
-     * @param string $address Email for the from field
+     * @param string $email Email for the from field
      * @param string $name  Name for the from field
      */
     public function alwaysFrom($address, $name)
@@ -54,11 +55,11 @@ class SendGridAdapter implements MailerAdapter
         $this->from = compact('address', 'name');
     }
 
-    /*
+    /**
      * Send an email!
      *
-     * @param string $htmlMessage   HTML Content with the message(body)
-     * @param string $callback  Callback function to act on the message
+     * @param string $message  HTML Content with the message(body)
+     * @param string $callback Callback function to act on the message
      */
     public function send($htmlMessage, $callback)
     {
@@ -66,7 +67,12 @@ class SendGridAdapter implements MailerAdapter
         $this->callMessageBuilder($callback, $message);
         $message->setBody($htmlMessage, 'text/html');
 
-        return $this->sendgrid->client->mail()->send()->post($message->getSendGridEmail());
+        $allSuccess = true;
+        foreach($message->getIlluminateEmails() as $messages){
+          $allSuccess = $allSuccess && $this->swift->send($messages->getSwiftMessage());
+          sleep(1);
+        }
+        return $allSuccess;
     }
 
     /*
@@ -76,7 +82,7 @@ class SendGridAdapter implements MailerAdapter
      */
     protected function createMessage()
     {
-        $message = new SendGridEmailAdapter(new Mail(), new Personalization());
+        $message = new MailTrapEmailAdapter(new Message(new Swift_Message()));
 
         // If a global from address has been specified we will set it on every message
         // instances so the developer does not have to repeat themselves every time
@@ -91,8 +97,8 @@ class SendGridAdapter implements MailerAdapter
     /*
      * Build the message with its fields using a callback
      *
-     * @param  \Closure                   $callback  The function used (and called) to build the message
-     * @param  SendGridEmailAdapter  $message   The message to use and add the fields to
+     * @param  \Closure   $callback  The function used (and called) to build the message
+     * @param  Message    $message   The message to use and add the fields to
      */
     protected function callMessageBuilder($callback, $message)
     {

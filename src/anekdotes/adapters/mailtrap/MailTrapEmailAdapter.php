@@ -42,8 +42,8 @@ class MailTrapEmailAdapter
     {
         $emails = [];
         foreach($this->tos as $destination){
-          $mailCopy = $mail;
-          $mailCopy->to($destination);
+          $mailCopy = $this->mail;
+          $mailCopy->to($destination[0],$destination[1]);
           $emails[] = $mailCopy;
         }
         return $emails;
