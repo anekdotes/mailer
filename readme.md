@@ -77,7 +77,7 @@ The following adapters are currently available for use :
     use \Swift_Mailer;
     use \Swift_SmtpTransport;
 
-    $mailer = new Mailer(new SendgridAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
+    $mailer = new Mailer(new SwiftMailerAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
         ->setUsername('your username')
         ->setPassword('your password'))));
     $mailer->send('<p>My HTML message</p>',function($message){
