@@ -50,9 +50,9 @@ class MailTrapEmailAdapter
         foreach ($this->tos as $destination) {
             $mail = new Message(new Swift_Message());
             $mail->to($destination[0], $destination[1]);
-            $mail->from($this->from["email"], $this->from["name"]);
+            $mail->from($this->from['email'], $this->from['name']);
             $mail->subject($this->subject);
-            $mail->setBody($this->body["content"], $this->body["type"]);
+            $mail->setBody($this->body['content'], $this->body['type']);
             $emails[] = $mail;
         }
 
@@ -80,7 +80,8 @@ class MailTrapEmailAdapter
      */
     public function from($email, $name)
     {
-        $this->from = ["email" => $email, "name" => $name];
+        $this->from = ['email' => $email, 'name' => $name];
+
         return $this;
     }
 
@@ -130,7 +131,8 @@ class MailTrapEmailAdapter
      */
     public function setBody($content, $type)
     {
-        $this->body = ["content" => $content, "type" => $type];
+        $this->body = ['content' => $content, 'type' => $type];
+
         return $this;
     }
 }
