@@ -11,7 +11,7 @@
 
 namespace Tests;
 
-use Anekdotes\Mailer\Adapters\MailTrap\MailTrapEmailAdapter;
+use Anekdotes\Mailer\Adapters\Mailtrap\MailTrapEmailAdapter;
 use PHPUnit_Framework_TestCase;
 
 class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
