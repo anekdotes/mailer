@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Anekdotes\Mailer\Adapters\SwiftMailer;
+namespace Anekdotes\Mailer\Adapters\Swiftmailer;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
 use Illuminate\Mail\Message;

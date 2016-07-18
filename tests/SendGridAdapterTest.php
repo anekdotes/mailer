@@ -11,7 +11,7 @@
 
 namespace Tests;
 
-use Anekdotes\Mailer\Adapters\SendGrid\SendGridAdapter;
+use Anekdotes\Mailer\Adapters\Sendgrid\SendGridAdapter;
 use PHPUnit_Framework_TestCase;
 use SendGrid;
 use SendGrid\Client;

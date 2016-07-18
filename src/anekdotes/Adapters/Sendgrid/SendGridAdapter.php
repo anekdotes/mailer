@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Anekdotes\Mailer\Adapters\SendGrid;
+namespace Anekdotes\Mailer\Adapters\Sendgrid;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
 use SendGrid\Mail;

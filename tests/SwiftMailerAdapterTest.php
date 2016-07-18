@@ -11,7 +11,7 @@
 
 namespace Tests;
 
-use Anekdotes\Mailer\Adapters\SwiftMailer\SwiftMailerAdapter;
+use Anekdotes\Mailer\Adapters\Swiftmailer\SwiftMailerAdapter;
 use PHPUnit_Framework_TestCase;
 use Swift_Mailer;
 use Swift_SmtpTransport;
