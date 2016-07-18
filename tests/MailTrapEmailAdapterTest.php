@@ -12,7 +12,6 @@
 namespace Tests;
 
 use Anekdotes\Mailer\Adapters\MailTrap\MailTrapEmailAdapter;
-use Illuminate\Mail\Message;
 use PHPUnit_Framework_TestCase;
 
 class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
@@ -47,7 +46,7 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('from');
         $mailProp->setAccessible(true);
-        $this->assertEquals(["email" => 'a@b.c', "name" => 'abc'], $mailProp->getValue($email));
+        $this->assertEquals(['email' => 'a@b.c', 'name' => 'abc'], $mailProp->getValue($email));
     }
 
     public function testMTEmailAddCC()
@@ -77,7 +76,7 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('subject');
         $mailProp->setAccessible(true);
-        $this->assertEquals("Subjectt", $mailProp->getValue($email));
+        $this->assertEquals('Subjectt', $mailProp->getValue($email));
     }
 
     public function testMTEmailsetBody()
@@ -87,6 +86,6 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('body');
         $mailProp->setAccessible(true);
-        $this->assertEquals(["content" => "<div>kk</div>", "type" => "text/html"], $mailProp->getValue($email));
+        $this->assertEquals(['content' => '<div>kk</div>', 'type' => 'text/html'], $mailProp->getValue($email));
     }
 }
