@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Anekdotes\Mailer\Adapters\MailTrap;
+namespace Anekdotes\Mailer\Adapters\Mailtrap;
 
 use Illuminate\Mail\Message;
 use Swift_Message;
