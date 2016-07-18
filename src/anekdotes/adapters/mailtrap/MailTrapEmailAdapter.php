@@ -11,28 +11,34 @@
 
 namespace Anekdotes\Mailer\Adapters\MailTrap;
 
+use Illuminate\Mail\Message;
+use Swift_Message;
+
 class MailTrapEmailAdapter
 {
-    /*
-     * Contains the mail instance to be sent. This is what gets adapted
-     * @var \Illuminate\Mail
-     */
-    private $mail;
     /*
      * Contains the emails to send this message to
      * @var array
      */
     private $tos;
+    /*
+     * Contains the shared email data
+     * @var array
+     */
+    private $from;
+    private $subject;
+    private $body;
 
     /*
      * Constructor. Instanciates the mail
      *
-     * @param \Illuminate\Mail $mail Mail object that will be sent(multiple times hehe)
      */
-    public function __construct($mail)
+    public function __construct()
     {
-        $this->mail = $mail;
         $this->tos = [];
+        $this->from = '';
+        $this->subject = '';
+        $this->body = [];
     }
 
     /**
@@ -42,9 +48,12 @@ class MailTrapEmailAdapter
     {
         $emails = [];
         foreach ($this->tos as $destination) {
-            $mailCopy = $this->mail;
-            $mailCopy->to($destination[0], $destination[1]);
-            $emails[] = $mailCopy;
+            $mail = new Message(new Swift_Message());
+            $mail->to($destination[0], $destination[1]);
+            $mail->from($this->from["email"], $this->from["name"]);
+            $mail->subject($this->subject);
+            $mail->setBody($this->body["content"], $this->body["type"]);
+            $emails[] = $mail;
         }
 
         return $emails;
@@ -71,8 +80,7 @@ class MailTrapEmailAdapter
      */
     public function from($email, $name)
     {
-        $this->mail->from($email, $name);
-
+        $this->from = ["email" => $email, "name" => $name];
         return $this;
     }
 
@@ -109,7 +117,7 @@ class MailTrapEmailAdapter
      */
     public function subject($subject)
     {
-        $this->mail->subject($subject);
+        $this->subject = $subject;
 
         return $this;
     }
@@ -122,8 +130,7 @@ class MailTrapEmailAdapter
      */
     public function setBody($content, $type)
     {
-        $this->mail->setBody($content, $type);
-
+        $this->body = ["content" => $content, "type" => $type];
         return $this;
     }
 }

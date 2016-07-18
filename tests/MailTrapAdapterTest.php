@@ -60,6 +60,7 @@ class MailTrapAdapterTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(
             $mailTrapAdapter->send('<div>blabla</div>', function ($message) {
                 $message->to('a@b.c', 'abc');
+                $message->from('a@b.d', 'abd');
             }));
     }
 

@@ -20,26 +20,19 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
     //Tests the instantion of the MailTrap Email Adapter
     public function testInstantiateMTEmailAdapter()
     {
-        $mailStub = $this->createMock(Message::class);
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $this->assertInstanceOf(MailTrapEmailAdapter::class, $email);
-        $reflection = new \ReflectionClass($email);
-        $mailProp = $reflection->getProperty('mail');
-        $mailProp->setAccessible(true);
-        $this->assertEquals($mailStub, $mailProp->getValue($email));
     }
 
     public function testMTEmailSend()
     {
-        $mailStub = $this->createMock(Message::class);
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $this->assertEquals([], $email->getIlluminateEmails());
     }
 
     public function testMTEmailTo()
     {
-        $mailStub = $this->createMock(Message::class);
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $email->to('a@b.c', 'abc');
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('tos');
@@ -49,16 +42,17 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
 
     public function testMTEmailFrom()
     {
-        $mailStub = $this->createMock(Message::class);
-        $mailStub->expects($this->once())->method('from')->with('a@b.c', 'abc');
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $email->from('a@b.c', 'abc');
+        $reflection = new \ReflectionClass($email);
+        $mailProp = $reflection->getProperty('from');
+        $mailProp->setAccessible(true);
+        $this->assertEquals(["email" => 'a@b.c', "name" => 'abc'], $mailProp->getValue($email));
     }
 
     public function testMTEmailAddCC()
     {
-        $mailStub = $this->createMock(Message::class);
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $email->addCc('a@b.c', 'abc');
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('tos');
@@ -68,8 +62,7 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
 
     public function testMTEmailAddBCC()
     {
-        $mailStub = $this->createMock(Message::class);
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $email->addBcc('a@b.c', 'abc');
         $reflection = new \ReflectionClass($email);
         $mailProp = $reflection->getProperty('tos');
@@ -79,19 +72,21 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
 
     public function testMTEmailSubject()
     {
-        $mailStub = $this->createMock(Message::class);
-        $mailStub->expects($this->once())->method('subject')->with(
-          $this->equalTo('Subjectt')
-        );
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $this->assertEquals($email, $email->subject('Subjectt'));
+        $reflection = new \ReflectionClass($email);
+        $mailProp = $reflection->getProperty('subject');
+        $mailProp->setAccessible(true);
+        $this->assertEquals("Subjectt", $mailProp->getValue($email));
     }
 
     public function testMTEmailsetBody()
     {
-        $mailStub = $this->createMock(Message::class);
-        $mailStub->expects($this->once())->method('__call')->with('setBody', ['<div>kk</div>', 'text/html']);
-        $email = new MailTrapEmailAdapter($mailStub);
+        $email = new MailTrapEmailAdapter();
         $this->assertEquals($email, $email->setBody('<div>kk</div>', 'text/html'));
+        $reflection = new \ReflectionClass($email);
+        $mailProp = $reflection->getProperty('body');
+        $mailProp->setAccessible(true);
+        $this->assertEquals(["content" => "<div>kk</div>", "type" => "text/html"], $mailProp->getValue($email));
     }
 }

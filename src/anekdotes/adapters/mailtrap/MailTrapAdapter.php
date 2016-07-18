@@ -11,8 +11,6 @@
 namespace Anekdotes\Mailer\Adapters\MailTrap;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
-use Illuminate\Mail\Message;
-use Swift_Message;
 
 /**
  * Adapts the SwifTMailer API to send messages without BCCS AND with a delay.
@@ -82,7 +80,7 @@ class MailTrapAdapter implements MailerAdapter
      */
     protected function createMessage()
     {
-        $message = new MailTrapEmailAdapter(new Message(new Swift_Message()));
+        $message = new MailTrapEmailAdapter();
 
         // If a global from address has been specified we will set it on every message
         // instances so the developer does not have to repeat themselves every time
