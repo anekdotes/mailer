@@ -28,8 +28,8 @@ You can either use the Mailer abstraction class to simplify adapter handling
 
     $mailer = new Mailer(new SendgridAdapter(new SendGrid('sendgridapikey')));
     $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me');
-            ->to('you@me.com','You');
+        $message->from('me@you.com','Me')
+            ->to('you@me.com','You')
             ->subject('This is a message'); 
     });
 
@@ -42,8 +42,8 @@ Or directly use an adapter
     $sendgrid = new SendgridAdapter(new SendGrid('sendgridapikey'));
 
     $sendgrid->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me');
-            ->to('you@me.com','You');
+        $message->from('me@you.com','Me')
+            ->to('you@me.com','You')
             ->subject('This is a message'); 
     });
 
@@ -62,8 +62,8 @@ The following adapters are currently available for use :
 
     $mailer = new Mailer(new SendgridAdapter(new SendGrid('sendgridapikey')));
     $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me');
-            ->to('you@me.com','You');
+        $message->from('me@you.com','Me')
+            ->to('you@me.com','You')
             ->subject('This is a message'); 
     });
 
@@ -81,8 +81,8 @@ The following adapters are currently available for use :
         ->setUsername('your username')
         ->setPassword('your password'))));
     $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me');
-            ->to('you@me.com','You');
+        $message->from('me@you.com','Me')
+            ->to('you@me.com','You')
             ->subject('This is a message'); 
     });
 
@@ -103,8 +103,8 @@ The goal of this adapter is to bypass Mailtrap's request limit/second by sending
         ->setUsername('your username')
         ->setPassword('your password'))));
     $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me');
-            ->to('you@me.com','You');
+        $message->from('me@you.com','Me')
+            ->to('you@me.com','You')
             ->subject('This is a message'); 
     });
 
