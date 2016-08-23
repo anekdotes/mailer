@@ -18,7 +18,7 @@
   </filter>
 
    <testsuites>
-      <testsuite name="Logger Test Suite">
+      <testsuite name="Mailer Test Suite">
          <directory>tests</directory>
       </testsuite>
    </testsuites>
