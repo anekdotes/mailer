@@ -56,7 +56,7 @@ class MailTrapEmailAdapter
             $mail->subject($this->subject);
             $mail->setBody($this->body['content'], $this->body['type']);
             foreach ($this->files as $file) {
-              $mail->attach($file);
+                $mail->attach($file);
             }
             $emails[] = $mail;
         }
