@@ -28,6 +28,7 @@ class MailTrapEmailAdapter
     private $from;
     private $subject;
     private $body;
+    private $files = [];
 
     /*
      * Constructor. Instanciates the mail
@@ -39,6 +40,7 @@ class MailTrapEmailAdapter
         $this->from = '';
         $this->subject = '';
         $this->body = [];
+        $this->files = [];
     }
 
     /**
@@ -53,6 +55,9 @@ class MailTrapEmailAdapter
             $mail->from($this->from['email'], $this->from['name']);
             $mail->subject($this->subject);
             $mail->setBody($this->body['content'], $this->body['type']);
+            foreach ($this->files as $file) {
+              $mail->attach($file);
+            }
             $emails[] = $mail;
         }
 
@@ -132,6 +137,18 @@ class MailTrapEmailAdapter
     public function setBody($content, $type)
     {
         $this->body = ['content' => $content, 'type' => $type];
+
+        return $this;
+    }
+
+    /**
+     * Set the attachement.
+     *
+     * @param string $path
+     */
+    public function attach($file)
+    {
+        $this->files[] = $file;
 
         return $this;
     }

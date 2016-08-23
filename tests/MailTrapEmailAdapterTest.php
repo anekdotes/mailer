@@ -88,4 +88,14 @@ class MailTrapEmailAdapterTest extends PHPUnit_Framework_TestCase
         $mailProp->setAccessible(true);
         $this->assertEquals(['content' => '<div>kk</div>', 'type' => 'text/html'], $mailProp->getValue($email));
     }
+
+    public function testMTEmailsetFiles()
+    {
+        $email = new MailTrapEmailAdapter();
+        $this->assertEquals($email, $email->attach('/upload/dummy.pdf'));
+        $reflection = new \ReflectionClass($email);
+        $mailProp = $reflection->getProperty('files');
+        $mailProp->setAccessible(true);
+        $this->assertEquals(['/upload/dummy.pdf'], $mailProp->getValue($email));
+    }
 }
