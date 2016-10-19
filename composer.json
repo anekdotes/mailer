@@ -1,6 +1,7 @@
 {
   "name": "anekdotes/mailer",
   "type": "library",
+  "version": "1.2.0",
   "description": "A Mailing Adapter to handle different Mail APIs.",
   "keywords": [
     "mail",
@@ -20,7 +21,8 @@
     "sendgrid/sendgrid": "~5.0.0",
     "codacy/coverage": "^1.0",
     "illuminate/mail": "~4.2",
-    "swiftmailer/swiftmailer": "~5.2"
+    "swiftmailer/swiftmailer": "~5.2",
+    "anekdotes/file": "<2.0.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.4"

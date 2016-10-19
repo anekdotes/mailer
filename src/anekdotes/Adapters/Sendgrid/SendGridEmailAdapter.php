@@ -122,4 +122,26 @@ class SendGridEmailAdapter
 
         return $this;
     }
+
+    /**
+     * Set the attachement.
+     *
+     * @param string $path
+     */
+    public function attach($file)
+    {
+        if (File::exists($file)) {
+            $filename = explode('/', $file)[count(explode('/', $file)) - 1];
+            $mime = mime_content_type($file);
+            $attachment = new \Sendgrid\Attachment();
+            $attachment->setContent(File::get($file));
+            $attachment->setType($mime);
+            $attachment->setFilename($filename);
+            $attachment->setDisposition('attachment');
+            $attachment->setContentId($filename);
+            $this->mail->addAttachment($attachment);
+        }
+
+        return $this;
+    }
 }
