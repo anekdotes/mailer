@@ -123,6 +123,6 @@ class SendGridEmailAdapterTest extends PHPUnit_Framework_TestCase
               return $subject instanceof \SendGrid\Attachment;
           }));
         $email = new SendGridEmailAdapter($mailStub, $persoStub);
-        $this->assertEquals($email, $email->attach('tests/input/input.txt'));
+        $this->assertEquals($email, $email->attach('Tests/input/input.txt'));
     }
 }
