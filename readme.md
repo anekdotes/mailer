@@ -21,31 +21,30 @@ Install via composer into your project:
 
 You can either use the Mailer abstraction class to simplify adapter handling
 
-```
-    use Anekdotes\Mailer\Mailer;
-    use Anekdotes\Mailer\Adapters\SendgridAdapter;
-    use Sendgrid\Sendgrid;
+```php
+use Anekdotes\Mailer\Mailer;
+use Anekdotes\Mailer\Adapters\SendgridAdapter;
+use Sendgrid\Sendgrid;
 
-    $mailer = new Mailer(new SendgridAdapter(new SendGrid('sendgridapikey')));
-    $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me')
-            ->to('you@me.com','You')
-            ->subject('This is a message'); 
-    });
-
-```
+$mailer = new Mailer(new SendgridAdapter(new SendGrid('sendgridapikey')));
+$mailer->send('<p>My HTML message</p>',function($message){
+    $message->from('me@you.com','Me')
+        ->to('you@me.com','You')
+        ->subject('This is a message'); 
+});
+```php
 
 Or directly use an adapter
-```
-    use Anekdotes\Mailer\Adapters\SendgridAdapter;
+```php
+use Anekdotes\Mailer\Adapters\SendgridAdapter;
 
-    $sendgrid = new SendgridAdapter(new SendGrid('sendgridapikey'));
+$sendgrid = new SendgridAdapter(new SendGrid('sendgridapikey'));
 
-    $sendgrid->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me')
-            ->to('you@me.com','You')
-            ->subject('This is a message'); 
-    });
+$sendgrid->send('<p>My HTML message</p>',function($message){
+    $message->from('me@you.com','Me')
+        ->to('you@me.com','You')
+        ->subject('This is a message'); 
+});
 
 ```
 
@@ -55,37 +54,35 @@ The following adapters are currently available for use :
 
 ### SendgridAdapter
 
-```
-    use Anekdotes\Mailer\Mailer;
-    use Anekdotes\Mailer\Adapters\SendgridAdapter;
-    use Sendgrid\Sendgrid;
+```php
+use Anekdotes\Mailer\Mailer;
+use Anekdotes\Mailer\Adapters\SendgridAdapter;
+use Sendgrid\Sendgrid;
 
-    $mailer = new Mailer(new SendgridAdapter(new SendGrid('sendgridapikey')));
-    $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me')
-            ->to('you@me.com','You')
-            ->subject('This is a message'); 
-    });
-
+$mailer = new Mailer(new SendgridAdapter(new SendGrid('sendgridapikey')));
+$mailer->send('<p>My HTML message</p>',function($message){
+    $message->from('me@you.com','Me')
+        ->to('you@me.com','You')
+        ->subject('This is a message'); 
+});
 ```
 
 ###SwiftMailerAdapter
 
-```
-    use Anekdotes\Mailer\Mailer;
-    use Anekdotes\Mailer\Adapters\SwiftMailerAdapter;
-    use \Swift_Mailer;
-    use \Swift_SmtpTransport;
+```php
+use Anekdotes\Mailer\Mailer;
+use Anekdotes\Mailer\Adapters\SwiftMailerAdapter;
+use \Swift_Mailer;
+use \Swift_SmtpTransport;
 
-    $mailer = new Mailer(new SwiftMailerAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
-        ->setUsername('your username')
-        ->setPassword('your password'))));
-    $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me')
-            ->to('you@me.com','You')
-            ->subject('This is a message'); 
-    });
-
+$mailer = new Mailer(new SwiftMailerAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
+    ->setUsername('your username')
+    ->setPassword('your password'))));
+$mailer->send('<p>My HTML message</p>',function($message){
+    $message->from('me@you.com','Me')
+        ->to('you@me.com','You')
+        ->subject('This is a message'); 
+});
 ```
 
 ###MailTrapAdapter
@@ -93,19 +90,18 @@ The following adapters are currently available for use :
 Note : This adapter uses Mailtrap's basic SMTP auth, using Swift_Mailer to send the SMTP Request. 
 The goal of this adapter is to bypass Mailtrap's request limit/second by sending one email per to/bcc/cc.
 
-```
-    use Anekdotes\Mailer\Mailer;
-    use Anekdotes\Mailer\Adapters\MailTrapAdapter;
-    use \Swift_Mailer;
-    use \Swift_SmtpTransport;
+```php
+use Anekdotes\Mailer\Mailer;
+use Anekdotes\Mailer\Adapters\MailTrapAdapter;
+use \Swift_Mailer;
+use \Swift_SmtpTransport;
 
-    $mailer = new Mailer(new MailTrapAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
-        ->setUsername('your username')
-        ->setPassword('your password'))));
-    $mailer->send('<p>My HTML message</p>',function($message){
-        $message->from('me@you.com','Me')
-            ->to('you@me.com','You')
-            ->subject('This is a message'); 
-    });
-
+$mailer = new Mailer(new MailTrapAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
+    ->setUsername('your username')
+    ->setPassword('your password'))));
+$mailer->send('<p>My HTML message</p>',function($message){
+    $message->from('me@you.com','Me')
+        ->to('you@me.com','You')
+        ->subject('This is a message'); 
+});
 ```
