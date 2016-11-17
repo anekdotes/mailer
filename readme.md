@@ -32,7 +32,7 @@ $mailer->send('<p>My HTML message</p>',function($message){
         ->to('you@me.com','You')
         ->subject('This is a message'); 
 });
-```php
+```
 
 Or directly use an adapter
 ```php
