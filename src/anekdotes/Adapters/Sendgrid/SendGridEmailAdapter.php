@@ -11,6 +11,8 @@
 
 namespace Anekdotes\Mailer\Adapters\Sendgrid;
 
+use Anekdotes\File\File;
+
 class SendGridEmailAdapter
 {
     /*

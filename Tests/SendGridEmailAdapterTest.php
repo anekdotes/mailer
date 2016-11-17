@@ -113,4 +113,16 @@ class SendGridEmailAdapterTest extends PHPUnit_Framework_TestCase
         $email = new SendGridEmailAdapter($mailStub, $persoStub);
         $this->assertEquals($email, $email->setBody('text/html', '<div>kk</div>'));
     }
+    
+    public function testSGEMailAttach()
+    {
+        $mailStub = $this->createMock(Mail::class);
+        $persoStub = $this->createMock(Personalization::class);
+        $mailStub->expects($this->once())->method('addAttachment')->with(
+          $this->callback(function ($subject) {
+              return $subject instanceof \SendGrid\Attachment;
+          }));
+        $email = new SendGridEmailAdapter($mailStub, $persoStub);
+        $this->assertEquals($email, $email->attach('tests/input/input.txt'));
+    }
 }
