@@ -48,6 +48,6 @@ class Mailer
      */
     public function send($message, $callback)
     {
-        $this->adapter->send($message, $callback);
+        return $this->adapter->send($message, $callback);
     }
 }
