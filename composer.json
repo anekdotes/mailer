@@ -1,7 +1,7 @@
 {
   "name": "anekdotes/mailer",
   "type": "library",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A Mailing Adapter to handle different Mail APIs.",
   "keywords": [
     "mail",
@@ -35,9 +35,6 @@
   "autoload-dev": {
     "psr-4": {
       "Tests\\": "tests/"
-    },
-    "files": [
-        "src/anekdotes/helpers.php"
-    ]
+    }
   }
 }
