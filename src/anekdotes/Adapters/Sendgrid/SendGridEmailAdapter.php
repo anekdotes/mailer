@@ -75,6 +75,19 @@ class SendGridEmailAdapter
     }
 
     /**
+     * Change the sender's name+email in the "ReplyTo" email field.
+     *
+     * @param string $name  Name of the sender
+     * @param string $email Email of the sender
+     */
+    public function setReplyTo($email, $name)
+    {
+        $this->mail->setReplyTo(new \Sendgrid\Email($name, $email));
+
+        return $this;
+    }
+
+    /**
      * Add a CC recipient.
      *
      * @param string $name  Name of the recipient
