@@ -19,7 +19,6 @@
   "require": {
     "php": ">=5.6.0",
     "sendgrid/sendgrid": "~5.0.0",
-    "codacy/coverage": "^1.0",
     "illuminate/mail": "~4.2",
     "swiftmailer/swiftmailer": "~5.2",
     "anekdotes/file": "<2.0.0"
