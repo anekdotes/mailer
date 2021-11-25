@@ -1,10 +1,9 @@
 # Anekdotes Mailer 
 
-[![Latest Stable Version](https://poser.pugx.org/anekdotes/mailer/v/stable)](https://packagist.org/packages/anekdotes/mailer)
-[![Build Status](https://travis-ci.org/anekdotes/mailer.svg?branch=master)](https://travis-ci.org/anekdotes/mailer)
-[![License](https://poser.pugx.org/anekdotes/mailer/license)](https://packagist.org/packages/anekdotes/mailer)
-[![Total Downloads](https://poser.pugx.org/anekdotes/mailer/downloads)](https://packagist.org/packages/anekdotes/mailer)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/50134febcefe4cc78daf07ca45969728)](https://www.codacy.com/app/Grasseh/mailer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=anekdotes/mailer&amp;utm_campaign=Badge_Grade)
+[![Latest Stable Version](http://poser.pugx.org/anekdotes/mailer/v)](https://packagist.org/packages/anekdotes/mailer)
+[![Total Downloads](http://poser.pugx.org/anekdotes/mailer/downloads)](https://packagist.org/packages/anekdotes/mailer)
+[![License](http://poser.pugx.org/anekdotes/mailer/license)](https://packagist.org/packages/anekdotes/mailer)
+[![PHP Version Require](http://poser.pugx.org/anekdotes/mailer/require/php)](https://packagist.org/packages/anekdotes/mailer)
 
 Allows adaptation and abstraction of mailing APIs. The goal of this project is to unify different Mailer APIs into a unified Send function. 
 In otherwords, this Mailer allows to only have to change the Mailer instantion if a different API needs to be used, without needing to change the Send Messages calls.
@@ -65,7 +64,24 @@ $mailer->send('<p>My HTML message</p>',function($message){
 });
 ```
 
-###SwiftMailerAdapter
+###SymfonyAdapter
+
+```php
+use Anekdotes\Mailer\Mailer;
+use Anekdotes\Mailer\Adapters\Symfony\SymfonyAdapter;
+use Symfony\Component\Mailer\Mailer as SymfonyMailer;
+use Symfony\Component\Mailer\Transport as SymfonyTransport;
+
+$dsn = 'smtp://user:pass@smtp.example.com:25';
+$symfonyTransport = SymfonyTransport::fromDsn($dsn);
+$symfonyMailer = new SymfonyMailer($symfonyTransport);
+$mailer = new Mailer(new SymfonyAdapter($symfonyMailer));
+$mailer->send('<p>My HTML message</p>',function($message){
+    $message->from('me@you.com','Me')
+        ->to('you@me.com','You')
+        ->subject('This is a message'); 
+});
+```
 
 ```php
 use Anekdotes\Mailer\Mailer;
@@ -85,21 +101,4 @@ $mailer->send('<p>My HTML message</p>',function($message){
 
 ###MailTrapAdapter
 
-Note : This adapter uses Mailtrap's basic SMTP auth, using Swift_Mailer to send the SMTP Request. 
-The goal of this adapter is to bypass Mailtrap's request limit/second by sending one email per to/bcc/cc.
-
-```php
-use Anekdotes\Mailer\Mailer;
-use Anekdotes\Mailer\Adapters\MailTrapAdapter;
-use \Swift_Mailer;
-use \Swift_SmtpTransport;
-
-$mailer = new Mailer(new MailTrapAdapter(new Swift_Mailer(Swift_SmtpTransport::newInstance('smtp.example.org', 25)
-    ->setUsername('your username')
-    ->setPassword('your password'))));
-$mailer->send('<p>My HTML message</p>',function($message){
-    $message->from('me@you.com','Me')
-        ->to('you@me.com','You')
-        ->subject('This is a message'); 
-});
-```
+Removed as of `2.0.0`

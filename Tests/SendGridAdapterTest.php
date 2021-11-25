@@ -12,11 +12,11 @@
 namespace Tests;
 
 use Anekdotes\Mailer\Adapters\Sendgrid\SendGridAdapter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SendGrid;
 use SendGrid\Client;
 
-class SendGridAdapterTest extends PHPUnit_Framework_TestCase
+final class SendGridAdapterTest extends TestCase
 {
     //Tests the instantion of the Sendgrid Adapter
     public function testInstantiateSendgridAdapter()
@@ -97,8 +97,12 @@ class SendGridAdapterTest extends PHPUnit_Framework_TestCase
         $clientReflection->setAccessible(true);
         $clientReflection->setValue($sendgridStub, $clientStub);
         $sendgridAdapter = new SendGridAdapter($sendgridStub);
-        $this->setExpectedException('\Exception');
-        $sendgridAdapter->send('<div>blabla</div>', 'blabla');
+
+        try {
+            $sendgridAdapter->send('<div>blabla</div>', 'blabla');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('\Exception', $e);
+        }
     }
 }
 

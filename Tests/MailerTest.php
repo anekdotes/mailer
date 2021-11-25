@@ -13,9 +13,9 @@ namespace Tests;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
 use Anekdotes\Mailer\Mailer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class MailerTest extends PHPUnit_Framework_TestCase
+final class MailerTest extends TestCase
 {
     //Tests the instantion of the Mailer
     public function testInstantiateMailer()

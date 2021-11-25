@@ -20,22 +20,15 @@ class SendGridEmailAdapter
      * @var \SendGrid\Mail
      */
     private $mail;
-    /*
-     * Contains the custom details of the email
-     * @var \SendGrid\Personalization
-     */
-    private $personalization;
 
     /*
      * Constructor. Instanciates the mail
      *
-     * @param \SendGrid\Mail $mail Mail object that will be sent
-     * @param \SendGrid\Personalization $personalization Additionnal contents to be added to the mail
+     * @param \SendGrid\Mail\Mail $mail Mail object that will be sent
      */
-    public function __construct($mail, $personalization)
+    public function __construct($mail)
     {
         $this->mail = $mail;
-        $this->personalization = $personalization;
     }
 
     /**
@@ -43,8 +36,6 @@ class SendGridEmailAdapter
      */
     public function getSendGridEmail()
     {
-        $this->mail->addPersonalization($this->personalization);
-
         return $this->mail;
     }
 
@@ -56,7 +47,7 @@ class SendGridEmailAdapter
      */
     public function to($email, $name)
     {
-        $this->personalization->addTo(new \Sendgrid\Email($name, $email));
+        $this->mail->addTo($email, $name);
 
         return $this;
     }
@@ -69,7 +60,7 @@ class SendGridEmailAdapter
      */
     public function from($email, $name)
     {
-        $this->mail->setFrom(new \Sendgrid\Email($name, $email));
+        $this->mail->setFrom($email, $name);
 
         return $this;
     }
@@ -82,7 +73,7 @@ class SendGridEmailAdapter
      */
     public function setReplyTo($email, $name)
     {
-        $this->mail->setReplyTo(new \Sendgrid\Email($name, $email));
+        $this->mail->setReplyTo($email, $name);
 
         return $this;
     }
@@ -95,7 +86,7 @@ class SendGridEmailAdapter
      */
     public function addCc($email, $name)
     {
-        $this->personalization->addCc(new \Sendgrid\Email($name, $email));
+        $this->mail->addCc($email, $name);
 
         return $this;
     }
@@ -108,7 +99,7 @@ class SendGridEmailAdapter
      */
     public function addBcc($email, $name)
     {
-        $this->personalization->addBcc(new \Sendgrid\Email($name, $email));
+        $this->mail->addBcc($email, $name);
 
         return $this;
     }
@@ -120,7 +111,7 @@ class SendGridEmailAdapter
      */
     public function subject($subject)
     {
-        $this->personalization->setSubject($subject);
+        $this->mail->setSubject($subject);
 
         return $this;
     }
@@ -133,7 +124,7 @@ class SendGridEmailAdapter
      */
     public function setBody($content, $type)
     {
-        $this->mail->addContent(new \Sendgrid\Content($type, $content));
+        $this->mail->addContent($type, $content);
 
         return $this;
     }
@@ -148,13 +139,9 @@ class SendGridEmailAdapter
         if (File::exists($file)) {
             $filename = explode('/', $file)[count(explode('/', $file)) - 1];
             $mime = $this->mime_content_type($file);
-            $attachment = new \Sendgrid\Attachment();
-            $file_encoded = base64_encode(File::get($file));
-            $attachment->setContent($file_encoded);
-            $attachment->setType($mime);
-            $attachment->setFilename($filename);
-            $attachment->setDisposition('attachment');
-            $this->mail->addAttachment($attachment);
+            $fileEncoded = base64_encode(File::get($file));
+
+            $this->mail->addAttachment($fileEncoded, $mime, $filename, 'attachment');
         }
 
         return $this;

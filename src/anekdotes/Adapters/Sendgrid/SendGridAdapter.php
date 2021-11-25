@@ -11,8 +11,7 @@
 namespace Anekdotes\Mailer\Adapters\Sendgrid;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
-use SendGrid\Mail;
-use SendGrid\Personalization;
+use SendGrid\Mail\Mail;
 
 /**
  * Adapts the Sendgrid API to send.
@@ -76,7 +75,7 @@ class SendGridAdapter implements MailerAdapter
      */
     protected function createMessage()
     {
-        $message = new SendGridEmailAdapter(new Mail(), new Personalization());
+        $message = new SendGridEmailAdapter(new Mail());
 
         // If a global from address has been specified we will set it on every message
         // instances so the developer does not have to repeat themselves every time

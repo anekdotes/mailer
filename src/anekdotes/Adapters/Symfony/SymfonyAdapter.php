@@ -8,16 +8,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Anekdotes\Mailer\Adapters\Swiftmailer;
+namespace Anekdotes\Mailer\Adapters\Symfony;
 
 use Anekdotes\Mailer\Adapters\MailerAdapter;
-use Illuminate\Mail\Message;
-use Swift_Message;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mime\Email;
 
-/**
- * Adapts the Sendgrid API to send.
- */
-class SwiftMailerAdapter implements MailerAdapter
+class SymfonyAdapter implements MailerAdapter
 {
     /**
      * The default address and name messages will be sent from.
@@ -27,20 +24,20 @@ class SwiftMailerAdapter implements MailerAdapter
     protected $from;
 
     /**
-     * The Swift Mailer instance.
+     * The Symfony Mailer instance.
      *
-     * @var \Swift_Mailer
+     * @var \SymfonyMailer
      */
-    protected $swift;
+    protected $symfonyMailer;
 
     /**
      * Create a new Mailer instance.
      *
-     * @param \Swift_Mailer $swift The SwiftMailer instance to be used with the Mailer
+     * @param Mailer $symfonyMailer The SymfonyMailer instance to be used with the Mailer
      */
-    public function __construct(\Swift_Mailer $swift)
+    public function __construct(Mailer $symfonyMailer)
     {
-        $this->swift = $swift;
+        $this->symfonyMailer = $symfonyMailer;
     }
 
     /**
@@ -63,10 +60,19 @@ class SwiftMailerAdapter implements MailerAdapter
     public function send($htmlMessage, $callback)
     {
         $message = $this->createMessage();
+
         $this->callMessageBuilder($callback, $message);
+
         $message->setBody($htmlMessage, 'text/html');
 
-        return $this->swift->send($message->getSwiftMessage());
+        try {
+            $this->symfonyMailer->send($message->getMessage());
+        } 
+        catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     /*
@@ -76,7 +82,7 @@ class SwiftMailerAdapter implements MailerAdapter
      */
     protected function createMessage()
     {
-        $message = new Message(new Swift_Message());
+        $message = new SymfonyEmailAdapter(new \Symfony\Component\Mime\Email());
 
         // If a global from address has been specified we will set it on every message
         // instances so the developer does not have to repeat themselves every time
