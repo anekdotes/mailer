@@ -1,9 +1,9 @@
 # Anekdotes Mailer 
 
-[![Latest Stable Version](http://poser.pugx.org/anekdotes/mailer/v)](https://packagist.org/packages/anekdotes/mailer)
+[![Latest Stable Version](http://poser.pugx.org/anekdotes/mailer/v?v=2)](https://packagist.org/packages/anekdotes/mailer)
 [![Total Downloads](http://poser.pugx.org/anekdotes/mailer/downloads)](https://packagist.org/packages/anekdotes/mailer)
 [![License](http://poser.pugx.org/anekdotes/mailer/license)](https://packagist.org/packages/anekdotes/mailer)
-[![PHP Version Require](http://poser.pugx.org/anekdotes/mailer/require/php)](https://packagist.org/packages/anekdotes/mailer)
+[![PHP Version Require](http://poser.pugx.org/anekdotes/mailer/require/php?v=2)](https://packagist.org/packages/anekdotes/mailer)
 
 Allows adaptation and abstraction of mailing APIs. The goal of this project is to unify different Mailer APIs into a unified Send function. 
 In otherwords, this Mailer allows to only have to change the Mailer instantion if a different API needs to be used, without needing to change the Send Messages calls.
